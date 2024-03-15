@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Title from './title.jsx'
 import '/src/index.css'
-import App from './search.jsx'
+import App from '../app.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
