@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Title from './title.jsx'
-import Search from './search.jsx'
 import '/src/index.css'
+import App from './search.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Title/>
-    <Search/>
+    <App/>
 
   </React.StrictMode>,
 )

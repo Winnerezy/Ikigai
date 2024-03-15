@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Landing from "./landing";
-function Search(){
+
+
+function Search({setTitle}){
 const [val, setVal] = useState('')
 const inputRef = useRef()
 const [searchData, setSearchData] = useState([])
@@ -16,7 +18,9 @@ const handleKeyDown = (e) =>{
 }
 
 const handleImageClick = (result)=>{
-    navigate(`/details/${result.titles[0].title}`)
+    const title = result.titles[0].title
+    navigate(`/details/${title}`)
+    setTitle(title)
 }
 
 //useEffect to run all the data fetching
@@ -30,7 +34,7 @@ useEffect (() =>{
             'Content-Type': 'application/json'
         }
     }
-    const res = await fetch(`https://api.jikan.moe/v4/manga?q=${val}`, options)
+    const res = await fetch(`https://api.jikan.moe/v4/anime?q=${val}`, options)
     const answer = await res.json()
     setSearchData(answer.data)
 
@@ -54,17 +58,42 @@ useEffect (() =>{
             ))}
         </section>    
         </main>
+
         </>
     )
 }
 
+
+
 function App(){
+    const [title, setTitle] = useState(null)
+    const [poster, setPoster] = useState()
+    const [about, setAbout] = useState('')
+    //useEffect to run all the data fetching
+useEffect (() =>{
+    async function fetchData() { 
+        if(title){
+    const options = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
+    const res = await fetch(`https://api.jikan.moe/v4/anime?q=${title}`, options)
+    const answer = await res.json()
+    setAbout(answer.data[0].synopsis)
+    setPoster(answer.data[0].images.jpg.image_url)
+}
+    }
+    fetchData()
+}, [title]) //val dependency
     return(
         
         <Router>
         <Routes>
-            <Route path="/" element={<Search/>}/>
-            <Route path= "/details/:title" element={<Landing/>}/>
+            <Route path="/" index element={<Search setTitle = {setTitle}/>}/>
+            <Route path= "/details/:title" element={<Landing title = {title} poster = {poster} about = {about}/>}/>
         </Routes>
         </Router> 
     )

@@ -1,9 +1,11 @@
-import { useParams } from "react-router-dom"
-
-function Landing(){
-const {title} = useParams()
+function Landing(props){
     return(
-        <div>{title}</div>
+        <div id='info' className="flex ">
+        <img src= {props.poster}/>
+        <div>{props.title}</div>
+        <div>{props.about}</div>
+        </div>
+
     )
 }
 
