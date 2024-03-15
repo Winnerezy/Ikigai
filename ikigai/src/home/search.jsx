@@ -46,14 +46,17 @@ useEffect (() =>{
     return (
         <>
         <div className="flex items-center justify-center mt-5">
-        <input className=" w-64 rounded-2xl text-black h-8 placeholder:italic placeholder:text-slate-400" type="text" placeholder="search here..." id="searchBar" ref={inputRef} onKeyDown={handleKeyDown}/>
+        <input className="outline-none w-64 rounded-2xl text-black h-8 placeholder:italic placeholder:text-slate-400" type="text" placeholder= "search here..." id="searchBar" ref={inputRef} onKeyDown={handleKeyDown}/>
         </div>
         <main>
         <section id="mangaCard" className="text-white grid grid-cols-4 gap-12 mt-12 mr-12 ml-12">
             {searchData.map((result, index) =>(
                 <div key={index}>
-                    <img className="w-48 h-70" src= {result.images.jpg.image_url} alt= {result.title} onClick={() => handleImageClick(result)} />
-                    <h2 className="w-30">{result.titles[0].title}</h2>
+                    <main className="grid grid-cols-1 gap-y-4">
+                    <img className="w-48 h-70 rounded-2xl" src= {result.images.jpg.image_url} alt= {result.title} onClick={() => handleImageClick(result)} />
+                    <h2 className="w-48 text-center">{result.titles[0].title}</h2>
+                    </main>
+                    
                 </div>
             ))}
         </section>    
@@ -69,6 +72,10 @@ function App(){
     const [title, setTitle] = useState(null)
     const [poster, setPoster] = useState()
     const [about, setAbout] = useState('')
+    const [status, setStatus] = useState(null)
+    const [score, setScore] = useState('')
+    const [genres, setGenres] = useState([''])
+    const [episodes, setEpisodes] = useState('')
     //useEffect to run all the data fetching
 useEffect (() =>{
     async function fetchData() { 
@@ -84,6 +91,13 @@ useEffect (() =>{
     const answer = await res.json()
     setAbout(answer.data[0].synopsis)
     setPoster(answer.data[0].images.jpg.image_url)
+    setStatus(answer.data[0].status)
+    setScore(answer.data[0].score)
+    for(let i = 0; i < answer.data[0].genres.length; i++){
+        setGenres(answer.data[0].genres[i].name)
+    }
+    setEpisodes(answer.data[0].episodes)
+
 }
     }
     fetchData()
@@ -93,7 +107,7 @@ useEffect (() =>{
         <Router>
         <Routes>
             <Route path="/" index element={<Search setTitle = {setTitle}/>}/>
-            <Route path= "/details/:title" element={<Landing title = {title} poster = {poster} about = {about}/>}/>
+            <Route path= "/details/:title" element={<Landing title = {title} poster = {poster} about = {about} status = {status} score = {score} genres = {genres} episodes = {episodes}/>}/>
         </Routes>
         </Router> 
     )
