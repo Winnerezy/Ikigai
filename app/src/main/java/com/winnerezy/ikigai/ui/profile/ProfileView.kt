@@ -1,4 +1,4 @@
-package com.winnerezy.ikigai.ui.updates
+package com.winnerezy.ikigai.ui.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun UpdatesView() {
-    val viewModel = UpdatesViewModel()
+fun ProfileView() {
+    val viewModel = ProfileViewModel()
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -25,7 +25,7 @@ fun UpdatesView() {
             .fillMaxSize()) {
             item{
                 Text(
-                    text = "Updates",
+                    text = "Profile",
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold,
