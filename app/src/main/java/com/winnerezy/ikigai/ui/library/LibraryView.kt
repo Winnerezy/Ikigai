@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +33,7 @@ fun LibraryView() {
                 item{
                     Text(
                         text = "Library",
-                        color = MaterialTheme.colors.onPrimary,
+                        color = Color.White,
                         fontSize = 30.sp,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(start = 30.dp, top = 100.dp)

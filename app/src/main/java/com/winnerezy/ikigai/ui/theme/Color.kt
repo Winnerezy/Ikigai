@@ -2,7 +2,7 @@ package com.winnerezy.ikigai.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF000000)
+val primaryLight = Color(0xFFFFFFFF)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF262626)
 val onPrimaryContainerLight = Color(0xFFB1B1B1)
@@ -110,7 +110,7 @@ val surfaceContainerLightHighContrast = Color(0xFFEEEEEE)
 val surfaceContainerHighLightHighContrast = Color(0xFFE8E8E8)
 val surfaceContainerHighestLightHighContrast = Color(0xFFE2E2E2)
 
-val primaryDark = Color(0xFFC6C6C6)
+val primaryDark = Color(0xFF000000)
 val onPrimaryDark = Color(0xFF303030)
 val primaryContainerDark = Color(0xFF000000)
 val onPrimaryContainerDark = Color(0xFF969696)

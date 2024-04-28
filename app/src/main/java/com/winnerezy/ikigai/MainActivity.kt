@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -47,6 +48,7 @@ import com.winnerezy.ikigai.ui.updates.UpdatesView
 
 class MainActivity : ComponentActivity() {
     private var navigationSelectedItem: Int = 0
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -61,15 +63,29 @@ class MainActivity : ComponentActivity() {
                 )
                 Scaffold (
                     bottomBar = {
-                        NavigationBar {
+                        NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
                             val navBackStackEntry by navController.currentBackStackEntryAsState()
                             val currentDestination = navBackStackEntry?.destination
 
                             items.forEachIndexed{ index, screen ->
                                 NavigationBarItem(
+                                    colors = NavigationBarItemColors(
+                                        selectedIconColor = Color.Black,
+                                        selectedTextColor = Color.White,
+                                        selectedIndicatorColor = Color.White,
+                                        unselectedIconColor = Color.White,
+                                        unselectedTextColor = Color.White,
+                                        disabledIconColor = Color.Black,
+                                        disabledTextColor = Color.White
+                                        ),
+                                    label = {
+                                        Text(text = screen.route)
+                                            },
+                                    alwaysShowLabel = true ,
                                     selected =
                                     currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                     onClick = {
+
                                         navigationSelectedItem = index
                                         navController.navigate(screen.route) {
                                             popUpTo(navController.graph.findStartDestination().id) {
@@ -91,12 +107,10 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }, content = {
-                        padding ->
                         IkigaiTheme {
                             NavHost(
                                 navController = navController,
-                                startDestination = BottomBarNavigation.Library.route,
-                                modifier = Modifier.padding(padding)
+                                startDestination = BottomBarNavigation.Library.route
                             ) {
                                 composable(BottomBarNavigation.Library.route) { LibraryView() }
                                 composable(BottomBarNavigation.Updates.route) { UpdatesView() }

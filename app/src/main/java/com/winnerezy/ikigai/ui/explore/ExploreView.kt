@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -31,12 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
+import androidx.compose.ui.unit.TextUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExploreView() {
     val viewModel = ExploreViewModel()
     var query by remember { mutableStateOf("") }
+    val mangaList by viewModel.manga.collectAsState(emptyList())
     Box(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.Black)) {
@@ -64,17 +69,12 @@ fun ExploreView() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
-                            .padding(horizontal = 20.dp)
-                            .border(width = 2.dp, color = Color.Black, shape = CircleShape),
-                        shape = CircleShape
+                            .padding(horizontal = 20.dp),
+                        shape = CircleShape,
                     )
 
                 }
             }
-            item {
-                Text( text = query )
-            }
-
         }
         Box(
             modifier = Modifier
