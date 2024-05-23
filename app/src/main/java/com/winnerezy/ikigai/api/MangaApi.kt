@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface MangaApi {
 
-    @GET("/manga?limit=10&includedTagsMode=AND&excludedTagsMode=OR&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[latestUploadedChapter]=desc&includes[]=manga&includes[]=cover_art&includes[]=author")
+    @GET("/manga?limit=15&includedTagsMode=AND&excludedTagsMode=OR&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[latestUploadedChapter]=desc&includes[]=manga&includes[]=cover_art&includes[]=author")
     suspend fun getManga(): Response<DataResponse<Manga>>
 
     @GET("/manga/{id}?includes[]=manga&includes[]=cover_art&includes[]=author&includes[]=artist&includes[]=tag&includes[]=creator")

@@ -6,6 +6,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -87,29 +89,30 @@ fun ExploreView(navController: NavController) {
                 }
             }
             item {
-               LazyColumn(modifier = Modifier
+               LazyVerticalGrid(modifier = Modifier
                    .height(500.dp)
                    .padding(10.dp)
                    .fillMaxWidth(),
-                   horizontalAlignment = Alignment.CenterHorizontally
+                   columns = GridCells.Fixed(3),
+                   horizontalArrangement = Arrangement.SpaceEvenly
                ) {
-                   item {
-                       manga?.data?.forEach {mangaItem->
-                           val title = mangaItem.attributes.title.en
-                           val id = mangaItem.id
-                           val info = mangaItem
-                               .relationships
-                               .map { relationship -> relationship }
-                               .filter { relationship -> relationship.type == "cover_art" }
-                           val fileName = info.find { it.type == "cover_art" }
-                               ?.attributes?.fileName
-                           if (fileName != null) {
-                               val link = mangaImage(id, fileName)
-                               MangaCard(id = id, title = title, link = link, navController = navController)
+                   manga?.let {
+                       items(it.data) {mangaItem ->
+                               val title = mangaItem.attributes.title.en
+                               val id = mangaItem.id
+                               val info = mangaItem
+                                   .relationships
+                                   .map { relationship -> relationship }
+                                   .filter { relationship -> relationship.type == "cover_art" }
+                               val fileName = info.find { it.type == "cover_art" }
+                                   ?.attributes?.fileName
+                               if (fileName != null) {
+                                   val link = mangaImage(id, fileName)
+                                   MangaCard(id = id, title = title, link = link, navController = navController)
+                               }
                            }
                        }
                    }
-               }
 
             }
         }
@@ -158,7 +161,7 @@ fun MangaCard(id: String, title: String?, link: String, navController: NavContro
             )
         }
         if (title != null) {
-            Text(text = title, modifier = Modifier.width(100.dp), maxLines = 1, textAlign = TextAlign.Center)
+            Text(text = title, modifier = Modifier.width(100.dp).padding(0.dp), maxLines = 2, textAlign = TextAlign.Center, fontSize = 12.sp)
         }
     }
 
